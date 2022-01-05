@@ -36,7 +36,7 @@ module "seed_bootstrap" {
   folder_id                      = google_folder.bootstrap.id
   project_id                     = "${var.project_prefix}-b-seed"
   state_bucket_name              = "${var.bucket_prefix}-b-tfstate"
-  billing_account                = var.billing_account
+  billing_account                = var.seed_billing_account
   group_org_admins               = var.group_org_admins
   group_billing_admins           = var.group_billing_admins
   default_region                 = var.default_region
@@ -49,10 +49,10 @@ module "seed_bootstrap" {
   project_labels = {
     environment       = "bootstrap"
     application_name  = "seed-bootstrap"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.seed_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "b"
   }
 
@@ -79,7 +79,7 @@ module "seed_bootstrap" {
 
   sa_org_iam_permissions = [
     "roles/accesscontextmanager.policyAdmin",
-    "roles/billing.user",
+    "roles/billing.admin",
     "roles/compute.networkAdmin",
     "roles/compute.xpnAdmin",
     "roles/iam.securityAdmin",
@@ -93,11 +93,13 @@ module "seed_bootstrap" {
   ]
 }
 
+/*
 resource "google_billing_account_iam_member" "tf_billing_admin" {
-  billing_account_id = var.billing_account
+  billing_account_id = var.seed_billing_account
   role               = "roles/billing.admin"
   member             = "serviceAccount:${module.seed_bootstrap.terraform_sa_email}"
 }
+*/
 
 // Comment-out the cloudbuild_bootstrap module and its outputs if you want to use Jenkins instead of Cloud Build
 module "cloudbuild_bootstrap" {
@@ -106,7 +108,7 @@ module "cloudbuild_bootstrap" {
   org_id                      = var.org_id
   folder_id                   = google_folder.bootstrap.id
   project_id                  = "${var.project_prefix}-b-cicd"
-  billing_account             = var.billing_account
+  billing_account             = var.cloudbuild_billing_account
   group_org_admins            = var.group_org_admins
   default_region              = var.default_region
   terraform_sa_email          = module.seed_bootstrap.terraform_sa_email
@@ -139,10 +141,10 @@ module "cloudbuild_bootstrap" {
   project_labels = {
     environment       = "bootstrap"
     application_name  = "cloudbuild-bootstrap"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.cloudbuild_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "b"
   }
 
@@ -183,10 +185,38 @@ resource "google_organization_iam_member" "org_cb_sa_browser" {
   member = "serviceAccount:${data.google_project.cloudbuild.number}@cloudbuild.gserviceaccount.com"
 }
 
+resource "google_organization_iam_member" "org_cb_sa_folder_viewer" {
+  count  = var.parent_folder == "" ? 1 : 0
+  org_id = var.org_id
+  role   = "roles/resourcemanager.folderViewer"
+  member = "serviceAccount:${data.google_project.cloudbuild.number}@cloudbuild.gserviceaccount.com"
+}
+
+resource "google_organization_iam_member" "org_cb_sa_security_reviewer" {
+  count  = var.parent_folder == "" ? 1 : 0
+  org_id = var.org_id
+  role   = "roles/iam.securityReviewer"
+  member = "serviceAccount:${data.google_project.cloudbuild.number}@cloudbuild.gserviceaccount.com"
+}
+
 resource "google_folder_iam_member" "folder_cb_sa_browser" {
   count  = var.parent_folder != "" ? 1 : 0
   folder = var.parent_folder
   role   = "roles/browser"
+  member = "serviceAccount:${data.google_project.cloudbuild.number}@cloudbuild.gserviceaccount.com"
+}
+
+resource "google_folder_iam_member" "folder_cb_sa_folder_viewer" {
+  count  = var.parent_folder != "" ? 1 : 0
+  folder = var.parent_folder
+  role   = "roles/resourcemanager.folderViewer"
+  member = "serviceAccount:${data.google_project.cloudbuild.number}@cloudbuild.gserviceaccount.com"
+}
+
+resource "google_folder_iam_member" "folder_cb_sa_security_reviewer" {
+  count  = var.parent_folder != "" ? 1 : 0
+  folder = var.parent_folder
+  role   = "roles/iam.securityReviewer"
   member = "serviceAccount:${data.google_project.cloudbuild.number}@cloudbuild.gserviceaccount.com"
 }
 

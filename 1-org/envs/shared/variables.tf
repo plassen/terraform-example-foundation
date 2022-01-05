@@ -19,9 +19,46 @@ variable "org_id" {
   type        = string
 }
 
-variable "billing_account" {
-  description = "The ID of the billing account to associate this project with"
+variable "audit_logs_billing_account" {
+  description = "The ID of the billing account to associate with audit logs project"
   type        = string
+}
+
+variable "billing_logs_billing_account" {
+  description = "The ID of the billing account to associate with billing logs project"
+  type        = string
+}
+
+variable "secrets_billing_account" {
+  description = "The ID of the billing account to associate with secrets project"
+  type        = string
+}
+
+variable "interconnect_billing_account" {
+  description = "The ID of the billing account to associate with interconnect project"
+  type        = string
+}
+
+variable "scc_billing_account" {
+  description = "The ID of the billing account to associate with scc project"
+  type        = string
+}
+
+variable "dns_hub_billing_account" {
+  description = "The ID of the billing account to associate with dns hub project"
+  type        = string
+}
+
+variable "base_network_hub_billing_account" {
+  description = "The ID of the billing account to associate with dns hub project"
+  type        = string
+  default     = ""
+}
+
+variable "restricted_network_hub_billing_account" {
+  description = "The ID of the billing account to associate with dns hub project"
+  type        = string
+  default     = ""
 }
 
 variable "terraform_service_account" {

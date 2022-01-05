@@ -22,9 +22,16 @@ module "env" {
 
   parent_id                  = var.parent_folder != "" ? "folders/${var.parent_folder}" : "organizations/${var.org_id}"
   org_id                     = var.org_id
-  billing_account            = var.billing_account
+  monitoring_billing_account         = var.prod_monitoring_billing_account
+  secrets_billing_account            = var.prod_secrets_billing_account
+  shared_base_billing_account        = var.prod_shared_base_billing_account
+  shared_restricted_billing_account  = var.prod_shared_restricted_billing_account
   terraform_service_account  = var.terraform_service_account
   monitoring_workspace_users = var.monitoring_workspace_users
   project_prefix             = var.project_prefix
   folder_prefix              = var.folder_prefix
+  base_network_project_budget_amount = var.base_network_project_budget_amount
+  restricted_network_project_budget_amount = var.restricted_network_project_budget_amount
+  monitoring_project_budget_amount = var.monitoring_project_budget_amount
+  secret_project_budget_amount = var.secret_project_budget_amount
 }

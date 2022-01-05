@@ -19,8 +19,13 @@ variable "org_id" {
   type        = string
 }
 
-variable "billing_account" {
-  description = "The ID of the billing account to associate projects with."
+variable "seed_billing_account" {
+  description = "The ID of the billing account to associate with seed project."
+  type        = string
+}
+
+variable "cloudbuild_billing_account" {
+  description = "The ID of the billing account to associate with cloud build project."
   type        = string
 }
 

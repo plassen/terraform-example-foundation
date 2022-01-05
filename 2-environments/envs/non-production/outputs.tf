@@ -19,6 +19,7 @@ output "env_folder" {
   value       = module.env.env_folder
 }
 
+
 output "monitoring_project_id" {
   description = "Project for monitoring infra."
   value       = module.env.monitoring_project_id

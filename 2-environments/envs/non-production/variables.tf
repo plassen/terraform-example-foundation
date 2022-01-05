@@ -19,8 +19,63 @@ variable "org_id" {
   type        = string
 }
 
-variable "billing_account" {
+variable "dev_monitoring_billing_account" {
   description = "The ID of the billing account to associate this project with"
+  type        = string
+}
+
+variable "dev_secrets_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "dev_shared_base_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "dev_shared_restricted_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "nonprod_monitoring_billing_account" {
+  description = "The ID of the billing account to associate this project with"
+  type        = string
+}
+
+variable "nonprod_secrets_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "nonprod_shared_base_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "nonprod_shared_restricted_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "prod_monitoring_billing_account" {
+  description = "The ID of the billing account to associate this project with"
+  type        = string
+}
+
+variable "prod_secrets_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "prod_shared_base_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
+  type        = string
+}
+
+variable "prod_shared_restricted_billing_account" {
+  description = "The ID of the billing account to associate with base shared voc project"
   type        = string
 }
 
@@ -50,4 +105,28 @@ variable "folder_prefix" {
   description = "Name prefix to use for folders created. Should be the same in all steps."
   type        = string
   default     = "fldr"
+}
+
+variable "base_network_project_budget_amount" {
+  description = "The amount to use as the budget for the base networks project"
+  type        = number
+  default     = 1000
+}
+
+variable "restricted_network_project_budget_amount" {
+  description = "The amount to use as the budget for the restricted networks project."
+  type        = number
+  default     = 1000
+}
+
+variable "monitoring_project_budget_amount" {
+  description = "The amount to use as the budget for the monitoring project."
+  type        = number
+  default     = 1000
+}
+
+variable "secret_project_budget_amount" {
+  description = "The amount to use as the budget for the secrets project."
+  type        = number
+  default     = 1000
 }

@@ -194,9 +194,58 @@ resource "google_organization_iam_member" "billing_creator_user" {
   member = "user:${var.gcp_billing_creator_user}"
 }
 
-resource "google_billing_account_iam_member" "billing_admin_user" {
+resource "google_billing_account_iam_member" "audit_logs_billing_admin_user" {
   count              = var.gcp_billing_admin_user != null ? 1 : 0
-  billing_account_id = var.billing_account
+  billing_account_id = var.audit_logs_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "billing_logs_billing_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.billing_logs_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "secrets_billing_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.secrets_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "interconnect_billing_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.interconnect_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "scc_billing_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.scc_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "base_network_hub_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.base_network_hub_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "restricted_network_hub_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.restricted_network_hub_billing_account
+  role               = "roles/billing.admin"
+  member             = "user:${var.gcp_billing_admin_user}"
+}
+
+resource "google_billing_account_iam_member" "dns_hub_admin_user" {
+  count              = var.gcp_billing_admin_user != null ? 1 : 0
+  billing_account_id = var.dns_hub_billing_account
   role               = "roles/billing.admin"
   member             = "user:${var.gcp_billing_admin_user}"
 }

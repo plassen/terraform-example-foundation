@@ -1,8 +1,9 @@
-# terraform-example-foundation
-This is an example repo showing how the CFT Terraform modules can be composed to build a secure GCP foundation, following the [Google Cloud security foundations guide](https://services.google.com/fh/files/misc/google-cloud-security-foundations-guide.pdf).
-The supplied structure and code is intended to form a starting point for building your own foundation with pragmatic defaults you can customize to meet your own requirements. Currently, the step 0 is manually executed.
-From step 1 onwards, the Terraform code is deployed by leveraging either Google Cloud Build (by default) or Jenkins.
-Cloud Build has been chosen by default to allow teams to quickly get started without needing to deploy a CI/CD tool, although it is worth noting the code can easily be executed by your preferred tool.
+# Pedro Plassen Portfolio Project (PPPP)
+## Setting up an Organization on Google Cloud
+
+This repo is based on [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation/), and provides an automated solution to deploy and manage an Organization in Google Cloud, following the best practices defined on the [Google Cloud security foundations guide](https://services.google.com/fh/files/misc/google-cloud-security-foundations-guide.pdf).
+
+Details about customizations can be found on the CHANGELOG.md file on each step.
 
 ## Overview
 This repo contains several distinct Terraform projects each within their own directory that must be applied separately, but in sequence.

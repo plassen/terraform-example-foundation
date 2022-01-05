@@ -26,17 +26,17 @@ module "org_audit_logs" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-logging"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.audit_logs_billing_account
   folder_id                   = google_folder.common.id
   activate_apis               = ["logging.googleapis.com", "bigquery.googleapis.com", "billingbudgets.googleapis.com"]
 
   labels = {
     environment       = "production"
     application_name  = "org-logging"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.audit_logs_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.org_audit_logs_project_alert_pubsub_topic
@@ -52,17 +52,17 @@ module "org_billing_logs" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-billing-logs"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.billing_logs_billing_account
   folder_id                   = google_folder.common.id
   activate_apis               = ["logging.googleapis.com", "bigquery.googleapis.com", "billingbudgets.googleapis.com"]
 
   labels = {
     environment       = "production"
     application_name  = "org-billing-logs"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.billing_logs_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.org_billing_logs_project_alert_pubsub_topic
@@ -82,17 +82,17 @@ module "org_secrets" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-secrets"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.secrets_billing_account
   folder_id                   = google_folder.common.id
   activate_apis               = ["logging.googleapis.com", "secretmanager.googleapis.com", "billingbudgets.googleapis.com"]
 
   labels = {
     environment       = "production"
     application_name  = "org-secrets"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.secrets_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.org_secrets_project_alert_pubsub_topic
@@ -112,17 +112,17 @@ module "interconnect" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-interconnect"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.interconnect_billing_account
   folder_id                   = google_folder.common.id
   activate_apis               = ["billingbudgets.googleapis.com", "compute.googleapis.com"]
 
   labels = {
     environment       = "production"
     application_name  = "org-interconnect"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.interconnect_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.interconnect_project_alert_pubsub_topic
@@ -142,17 +142,17 @@ module "scc_notifications" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-scc"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.scc_billing_account
   folder_id                   = google_folder.common.id
   activate_apis               = ["logging.googleapis.com", "pubsub.googleapis.com", "securitycenter.googleapis.com", "billingbudgets.googleapis.com"]
 
   labels = {
     environment       = "production"
     application_name  = "org-scc"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.scc_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.scc_notifications_project_alert_pubsub_topic
@@ -172,7 +172,7 @@ module "dns_hub" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-dns-hub"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.dns_hub_billing_account
   folder_id                   = google_folder.common.id
 
   activate_apis = [
@@ -187,10 +187,10 @@ module "dns_hub" {
   labels = {
     environment       = "production"
     application_name  = "org-dns-hub"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.dns_hub_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.dns_hub_project_alert_pubsub_topic
@@ -211,7 +211,7 @@ module "base_network_hub" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-base-net-hub"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.base_network_hub_billing_account
   folder_id                   = google_folder.common.id
 
   activate_apis = [
@@ -226,10 +226,10 @@ module "base_network_hub" {
   labels = {
     environment       = "production"
     application_name  = "org-base-net-hub"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.base_network_hub_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.base_net_hub_project_alert_pubsub_topic
@@ -250,7 +250,7 @@ module "restricted_network_hub" {
   default_service_account     = "deprivilege"
   name                        = "${var.project_prefix}-c-restricted-net-hub"
   org_id                      = var.org_id
-  billing_account             = var.billing_account
+  billing_account             = var.restricted_network_hub_billing_account
   folder_id                   = google_folder.common.id
 
   activate_apis = [
@@ -265,10 +265,10 @@ module "restricted_network_hub" {
   labels = {
     environment       = "production"
     application_name  = "org-restricted-net-hub"
-    billing_code      = "1234"
-    primary_contact   = "example1"
-    secondary_contact = "example2"
-    business_code     = "abcd"
+    billing_code      = lower(var.restricted_network_hub_billing_account)
+    primary_contact   = "pedro-at-plassen-dot-cloud"
+    secondary_contact = "pedro-dot-plassen-dot-lopes-at-gmail-dot-com"
+    business_code     = "plassen-cloud"
     env_code          = "p"
   }
   budget_alert_pubsub_topic   = var.restricted_net_hub_project_alert_pubsub_topic

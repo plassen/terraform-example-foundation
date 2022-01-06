@@ -27,19 +27,9 @@
     * change code to refer to specific billing vars
     * change "bu1" references to "pcs" (plassen cloud solution)
 
-
-
-* variables.tf
-    * define specific billing accounts
-    * change budget default value
-
-* set development values
-  * perimenter_name
-* set non-production values
-  * perimenter_name
-* set production values
-  * perimeter_name
-* set shared values
-  * default_region
-* changes on shared folder
-  * change code to accept specific billing account if defined
+### Fixes
+* add missing input parameters on peering_project
+  * alert_*
+  * budget_amount
+* add missing input parameter on infra_pipeline
+  * bucket_region

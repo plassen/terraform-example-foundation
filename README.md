@@ -12,3 +12,23 @@ The setup process can be found on the original [README.md](https://github.com/te
 The organization structure follows Google Cloud security foundations proposed model:
 
 ![Organization structure!](./docs/org_layout.png)
+
+* **Bootstrap** - folder with projects that support the organization structure configuration process
+  * **seed** 
+      * bucket where the organization terraform state file is stored
+      * SA used for applying all structure changes via Terraform
+  * **ci/cd** 
+      * Source code repositories where organization's terraform configuration files are stored 
+      * Cloud build triggers for planning and applying organization's Terraform files
+* **Common** - folder with projects/services shared by all environments
+* **Prod/NonProd/Dev** - folders for grouping projects by environment type
+  * *Base Shared VPC* - contains subnets that allow non-sensitive traffic between local environment application projects
+  * *Restricted Shared VPC* - contains subnets to allow sensitive traffic between local environment application projects
+
+### Security Model
+
+#### IAM Permissions
+
+#### Organization Policies
+
+#### Access control

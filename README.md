@@ -22,8 +22,8 @@ The organization structure follows Google Cloud security foundations proposed mo
       * Cloud build triggers for planning and applying organization's Terraform files
 * **Common** - folder with projects/services shared by all environments
 * **Prod/NonProd/Dev** - folders for grouping projects by environment type
-  * *Base Shared VPC* - contains subnets that allow non-sensitive traffic between local environment application projects
-  * *Restricted Shared VPC* - contains subnets to allow sensitive traffic between local environment application projects
+  * **Base Shared VPC** - contains subnets that allow non-sensitive traffic between local environment application projects
+  * **Restricted Shared VPC** - contains subnets to allow sensitive traffic between local environment application projects
 
 ### 2.Security Model
 

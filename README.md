@@ -5,84 +5,13 @@ This repo is based on [terraform-example-foundation](https://github.com/terrafor
 
 Details about customizations can be found on the CHANGELOG.md file on each step.
 
-## Overview
-This repo contains several distinct Terraform projects each within their own directory that must be applied separately, but in sequence.
-Each of these Terraform projects are to be layered on top of each other, running in the following order.
+The setup process can be found on the original [README.md](https://github.com/terraform-google-modules/terraform-example-foundation/blob/0ee39ceff2dce8c3a3b61d59bb1d45a4d0687e74/README.md) file.
 
-### [0. bootstrap](./0-bootstrap/)
+### Overview
 
-This stage executes the [CFT Bootstrap module](https://github.com/terraform-google-modules/terraform-google-bootstrap) which bootstraps an existing GCP organization, creating all the required GCP resources & permissions to start using the Cloud Foundation Toolkit (CFT).
-For CI/CD pipelines, you can use either Cloud Build (by default) or Jenkins. If you want to use Jenkins instead of Cloud Build, please see [README-Jenkins](./0-bootstrap/README-Jenkins.md) on how to use the included Jenkins sub-module.
+The organization structure follows the following proposed model
 
-The bootstrap step includes:
-- The `prj-b-seed` project, which contains:
-  - Terraform state bucket
-  - Custom Service Account used by Terraform to create new resources in GCP
-- The `prj-b-cicd` project, which contains:
-  - A CI/CD pipeline implemented with either Cloud Build or Jenkins
-  - If using Cloud Build:
-    - Cloud Source Repository
-  - If using Jenkins:
-    - A GCE Instance configured as a Jenkins Agent
-    - Custom Service Account to run Jenkins Agents GCE instances
-    - VPN connection with on-prem (or where ever your Jenkins Master is located)
-
-It is a best practice to separate concerns by having two projects here: one for the CFT resources and one for the CI/CD tool.
-The `prj-b-seed` project stores Terraform state and has the Service Account able to create / modify infrastructure.
-On the other hand, the deployment of that infrastructure is coordinated by a CI/CD tool of your choice allocated in a second project named `prj-b-cicd`.
-
-To further separate the concerns at the IAM level as well, the service account of the CI/CD tool is given different permissions than the Terraform account.
-The CI/CD tool account (`@cloudbuild.gserviceaccount.com` if using Cloud Build and `sa-jenkins-agent-gce@prj-b-cicd-xxxx.iam.gserviceaccount.com` if using Jenkins) is granted access to generate tokens over the Terraform custom service account.
-In this configuration, the baseline permissions of the CI/CD tool are limited, and the Terraform custom Service Account is granted the IAM permissions required to build the foundation.
-
-After executing this step, you will have the following structure:
-
-```
-example-organization/
-└── fldr-bootstrap
-    ├── prj-b-cicd
-    └── prj-b-seed
-```
-
-When this step uses the Cloud Build submodule, it sets up Cloud Build and Cloud Source Repositories for each of the stages below.
-Triggers are configured to run a `terraform plan` for any non environment branch and `terraform apply` when changes are merged to an environment branch (`development`, `non-production` & `production`).
-Usage instructions are available in the 0-bootstrap [README](./0-bootstrap/README.md).
-
-### [1. org](./1-org/)
-
-The purpose of this stage is to set up the common folder used to house projects which contain shared resources such as DNS Hub, Interconnect, SCC Notification, org level secrets, Network Hub and org level logging.
-This will create the following folder & project structure:
-
-```
-example-organization
-└── fldr-common
-    ├── prj-c-logging
-    ├── prj-c-base-net-hub
-    ├── prj-c-billing-logs
-    ├── prj-c-dns-hub
-    ├── prj-c-interconnect
-    ├── prj-c-restricted-net-hub
-    ├── prj-c-scc
-    └── prj-c-secrets
-```
-
-#### Logs
-
-Among the eight projects created under the common folder, two projects (`prj-c-logging`, `prj-c-billing-logs`) are used for logging.
-The first one for organization wide audit logs, and the latter for billing logs.
-In both cases the logs are collected into BigQuery datasets which can then be used general querying, dashboarding & reporting. Logs are also exported to Pub/Sub and GCS bucket.
-
-**Notes**:
-
-- Log export to GCS bucket has optional object versioning support via `log_export_storage_versioning`.
-- The various audit log types being captured in BigQuery are retained for 30 days.
-- For billing data, a BigQuery dataset is created with permissions attached, however you will need to configure a billing export [manually](https://cloud.google.com/billing/docs/how-to/export-data-bigquery), as there is no easy way to automate this at the moment.
-
-#### DNS Hub
-
-Another project created under the common folder. This project will host the DNS Hub for the organization.
-
-#### Interconnect
+[!Organization structure!](./docs/org_layout.png)
 
 Another project created under the common folder. This project will host the Dedicated Interconnect [Interconnect connection](https://cloud.google.com/network-connectivity/docs/interconnect/concepts/terminology#elements) for the organization. In case of the Partner Interconnect this project is unused and the [VLAN attachments](https://cloud.google.com/network-connectivity/docs/interconnect/concepts/terminology#for-partner-interconnect) will be placed directly into the corresponding Hub projects.
 

@@ -9,6 +9,6 @@ The setup process can be found on the original [README.md](https://github.com/te
 
 ### Overview
 
-The organization structure follows the following proposed model
+The organization structure follows Google Cloud security foundations proposed model:
 
 ![Organization structure!](./docs/org_layout.png)

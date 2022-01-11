@@ -7,7 +7,7 @@ Details about customizations can be found on the CHANGELOG.md file on each step.
 
 The setup process can be found on the original [README.md](https://github.com/terraform-google-modules/terraform-example-foundation/blob/0ee39ceff2dce8c3a3b61d59bb1d45a4d0687e74/README.md) file.
 
-### Overview
+### 1.Overview
 
 The organization structure follows Google Cloud security foundations proposed model:
 
@@ -25,7 +25,7 @@ The organization structure follows Google Cloud security foundations proposed mo
   * *Base Shared VPC* - contains subnets that allow non-sensitive traffic between local environment application projects
   * *Restricted Shared VPC* - contains subnets to allow sensitive traffic between local environment application projects
 
-### Security Model
+### 2.Security Model
 
 #### IAM Permissions
 

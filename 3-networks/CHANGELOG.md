@@ -5,4 +5,4 @@
 ### Changes
 
 ### Fixes
-* remove 'network_enable_flow_logs.yaml' constraint from gcp-policies in order to gcp-network cloud build trigger run successfuly
+* updated gcp_network_enable_flow_logs_v1.yaml template to reflect new syntax [Issue #608](https://github.com/terraform-google-modules/terraform-example-foundation/issues/608)

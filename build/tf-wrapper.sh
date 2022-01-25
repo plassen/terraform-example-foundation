@@ -42,6 +42,23 @@ tf_apply() {
   fi
 }
 
+## Terraform destroy for single environment.
+tf_destroy() {
+  local path=$1
+  local tf_env=$2
+  local tf_component=$3
+  echo "*************** TERRAFORM DESTROY *******************"
+  echo "      At environment: ${tf_component}/${tf_env} "
+  echo "*****************************************************"
+  if [ -d "$path" ]; then
+    cd "$path" || exit
+    terraform destroy -input=false -auto-approve "${tmp_plan}/${tf_component}-${tf_env}.tfplan" || exit 1
+    cd "$base_dir" || exit
+  else
+    echo "ERROR:  ${path} does not exist"
+  fi
+}
+
 ## terraform init for single environment.
 tf_init() {
   local path=$1
@@ -73,6 +90,26 @@ tf_plan() {
   if [ -d "$path" ]; then
     cd "$path" || exit
     terraform plan -input=false -out "${tmp_plan}/${tf_component}-${tf_env}.tfplan" || exit 21
+    cd "$base_dir" || exit
+  else
+    echo "ERROR:  ${tf_env} does not exist"
+  fi
+}
+
+## terraform plan in destroy mode for single environment.
+tf_plan_destroy() {
+  local path=$1
+  local tf_env=$2
+  local tf_component=$3
+  echo "*************** TERRAFORM PLAN IN DESTROY MODE *******************"
+  echo "      At environment: ${tf_component}/${tf_env} "
+  echo "******************************************************************"
+  if [ ! -d "${tmp_plan}" ]; then
+    mkdir "${tmp_plan}" || exit
+  fi
+  if [ -d "$path" ]; then
+    cd "$path" || exit
+    terraform plan -destroy -input=false -out "${tmp_plan}/${tf_component}-${tf_env}.tfplan" || exit 21
     cd "$base_dir" || exit
   else
     echo "ERROR:  ${tf_env} does not exist"
@@ -169,12 +206,20 @@ single_action_runner() {
             tf_apply "$env_path" "$env" "$component"
             ;;
 
+          destroy )
+            tf_destroy "$env_path" "$env" "$component"
+            ;;
+
           init )
             tf_init "$env_path" "$env" "$component"
             ;;
 
           plan )
             tf_plan "$env_path" "$env" "$component"
+            ;;
+
+          plan-destroy )
+            tf_plan_destroy "$env_path" "$env" "$component"
             ;;
 
           show )
